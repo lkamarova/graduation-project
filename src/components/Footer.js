@@ -9,17 +9,17 @@ function Footer() {
             <h5 className="footerHeader">Информация</h5>
             <ul className="nav flex-column">
               <li className="nav-item">
-                <a href="/about.html" className="nav-link">
+                <a href="/about" className="nav-link">
                   О магазине
                 </a>
               </li>
               <li className="nav-item">
-                <a href="/catalog.html" className="nav-link">
+                <a href="/catalog" className="nav-link">
                   Каталог
                 </a>
               </li>
               <li className="nav-item">
-                <a href="/contacts.html" className="nav-link">
+                <a href="/contacts" className="nav-link">
                   Контакты
                 </a>
               </li>
