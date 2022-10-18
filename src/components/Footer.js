@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../App.css";
 
 function Footer() {
@@ -9,19 +10,19 @@ function Footer() {
             <h5 className="footerHeader">Информация</h5>
             <ul className="nav flex-column">
               <li className="nav-item">
-                <a href="/about" className="nav-link">
+                <Link to="/about" className="nav-link">
                   О магазине
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a href="/catalog" className="nav-link">
+                <Link to="/catalog" className="nav-link">
                   Каталог
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a href="/contacts" className="nav-link">
+                <Link to="/contacts" className="nav-link">
                   Контакты
-                </a>
+                </Link>
               </li>
             </ul>
           </section>

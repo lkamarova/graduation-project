@@ -1,42 +1,50 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from "react";
-import { fetchBestsellers, fetchItems, fetchMoreItems, fetchNameCategories } from "../api";
-import "../App.css";
-import Banner from "./Banner";
-import Bestsellers from "./catalog/Bestsellers";
-import ButtonLoadMore from "./catalog/ButtonLoadMore";
-import Categories from "./catalog/Categories";
-import CatalogItems from "./catalog/СatalogItems";
-import Footer from "./Footer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchNameCategories,
+  fetchMoreItems,
+  fetchItems,
+  searchItems,
+} from "../../api";
+import "../../App.css";
+import Banner from "../Banner";
+import Footer from "../Footer";
+import { clearSearchText } from "../shopSlice";
+import ButtonLoadMore from "./ButtonLoadMore";
+import Categories from "./Categories";
+import SearchForm from "./SearchForm";
+import CatalogItems from "./СatalogItems";
 
-function HomePage() {
-  const [bestsellers, seBestsellers] = useState([]);
+function CatalogPage() {
   const [categories, setCategories] = useState([{ title: "Все" }]);
-  const [activeCategoryId, setActiveCategoryId] = useState({ all: "all" });
+  const [activeCategoryId, setActiveCategoryId] = useState(null);
   const [items, setItems] = useState([]);
   const [isButtonMore, setIsButtonMore] = useState(true);
   const [offset, setOffset] = useState(6);
+  const [dataFormSearch, setDataFormSearch] = useState();
+
+  const initialSearchText = useSelector(state => state.shop.searchText);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let isCancelled = false;
-    
+
     if (!isCancelled) {
-      getBestsellers();
       getCategories();
       getAllItems();
-    } 
+      
+      if(initialSearchText) {
+        setDataFormSearch(initialSearchText);
+        handleSearch(initialSearchText);
+      }
+    }
 
     return () => {
       isCancelled = true;
+      dispatch(clearSearchText());
     };
   }, []);
-
-  const getBestsellers = () => {
-    fetchBestsellers()
-      .then((res) => seBestsellers(res))
-      .catch((e) => {
-        console.error(e.message);
-      });
-  };
 
   const getCategories = () => {
     fetchNameCategories()
@@ -72,7 +80,7 @@ function HomePage() {
     fetchItems(el?.id)
       .then((res) => {
         setItems(res);
-        setActiveCategoryId(el.category);
+        setActiveCategoryId(el?.id);
         setIsButtonMore(true);
         setOffset(6);
       })
@@ -81,24 +89,37 @@ function HomePage() {
       });
   };
 
+  const handleSearch = (text) => {
+    searchItems(text)
+      .then((res) => {
+        setItems(res);
+        setActiveCategoryId(res[0].category)
+      })
+      .catch((e) => {
+        console.error(e.message);
+      });
+  };
+
+
   return (
     <>
       <main className="container">
         <div className="row">
           <div className="col">
             <Banner />
-            
-            {bestsellers?.length && <Bestsellers data={bestsellers} />}
-
             <section className="catalog">
               <h2 className="text-center">Каталог</h2>
+              <SearchForm
+                value={dataFormSearch}
+                setData={setDataFormSearch}
+                handleSubmit={handleSearch}
+              />
               <Categories
+                activeCategory={activeCategoryId}
                 data={categories}
                 handleClick={handleChangeCategory}
               />
-
               <CatalogItems data={items} />
-
               {isButtonMore && items?.length >= 6 && (
                 <ButtonLoadMore handleLoad={loadMoreItems} />
               )}
@@ -111,4 +132,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default CatalogPage;

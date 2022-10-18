@@ -5,17 +5,17 @@ import Footer from "./Footer";
 function AboutStore() {
   return (
     <>
-      <main class="container">
-        <div class="row">
-          <div class="col">
+      <main className="container">
+        <div className="row">
+          <div className="col">
             <Banner />
-            <section class="top-sales">
-              <h2 class="text-center">О магазине</h2>
+            <section className="top-sales">
+              <h2 className="text-center">О магазине</h2>
               <p>
                 В Интернете можно встретить немало магазинов, предлагающих
                 аксессуары. Но именно к нам хочется возвращаться снова и снова.
               </p>
-              <p class="h4 text-center">Мы предлагаем вам особые условия:</p>
+              <p className="h4 text-center">Мы предлагаем вам особые условия:</p>
               <div>
                 <p>
                   Индивидуальный подход специалиста. Когда поступает новая

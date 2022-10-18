@@ -23,6 +23,11 @@ a, a:hover, a:visited, a:active {
 
 a:hover {
   cursor: pointer;
+  color: #566067;
+}
+
+a:active {
+  color: #ff0000;
 }
 
 section {
@@ -30,7 +35,11 @@ section {
   margin-bottom: 2em;
 }
 
-
+.activeLink {
+  color: black;
+  display: flex;
+  align-items: center;
+}
 
 
 /* Common Styles */
@@ -326,4 +335,10 @@ h2, .h2 {
 
 .notFoundText {
   text-align: center;
+}
+
+.searchNavBar {
+  margin-bottom: 0;
+  height: 100%;
+  width: auto;
 }
