@@ -1,23 +1,11 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../App.css";
 import headerLogo from "../img/header-logo.png";
-import { addSearchText } from "./shopSlice";
+import SearchNavBar from "./catalog/SearchNavBar";
 
 function NavBar() {
   const [isSearch, setIsSearch] = useState(false);
-  const [formValue, setFormValue] = useState("");
-
-  let navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleSubmit = () => {
-    dispatch(addSearchText(formValue));
-    setFormValue("");
-    setIsSearch(false);
-    navigate("/catalog");
-  };
 
   return (
     <div className="container">
@@ -32,7 +20,7 @@ function NavBar() {
                 <NavLink
                   to="/"
                   className={(match) =>
-                    match.isActive ? "nav-link activeLink" : "nav-link"
+                    match.isActive ? "activeLink" : "nav-link"
                   }
                   end
                 >
@@ -65,20 +53,7 @@ function NavBar() {
               </div>
               <div>
                 <div className="header-controls-pics">
-                  {isSearch && (
-                    <div className="catalog-search-form form-inline searchNavBar">
-                      <input
-                        type="text"
-                        name="search"
-                        className="form-control"
-                        value={formValue}
-                        onChange={(ev) => setFormValue(ev.target.value)}
-                        placeholder="Поиск"
-                        onKeyPress={handleSubmit}
-                        //onChange={(ev) => handleSubmit(ev.target.value)}
-                      />
-                    </div>
-                  )}
+                  {isSearch && <SearchNavBar handleSearch={setIsSearch}/>}
                   {!isSearch && (
                     <div
                       data-id="search-expander"
