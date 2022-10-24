@@ -1,5 +1,7 @@
-export const fetchBestsellers = () =>
-  fetch("http://localhost:7070/api/top-sales", { method: "GET" }).then(
+const baseUrl = 'http://localhost:7070/api/';
+
+const get = (endpoint) =>
+  fetch(`${baseUrl}${endpoint}`, { method: "GET" }).then(
     (response) => {
       if (!response.ok) {
         throw new Error("Data coud not be fetched!");
@@ -9,54 +11,46 @@ export const fetchBestsellers = () =>
     }
   );
 
-export const fetchNameCategories = () =>
-  fetch("http://localhost:7070/api/categories", { method: "GET" }).then(
-    (response) => {
-      if (!response.ok) {
-        throw new Error("Data coud not be fetched!");
-      } else {
-        return response.json();
-      }
-    }
-  );
+const post = (endpoint, body) => {
+  const options = {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
-export const fetchItems = (categoryId) => {
-  const fetchLink = categoryId
-    ? `http://localhost:7070/api/items?categoryId=${categoryId}`
-    : "http://localhost:7070/api/items";
-
-  return fetch(fetchLink, { method: "GET" }).then((response) => {
+  return fetch(`${baseUrl}${endpoint}`, options).then((response) => {
     if (!response.ok) {
       throw new Error("Data coud not be fetched!");
     } else {
-      return response.json();
+      return response;
     }
   });
+};
+
+export const fetchBestsellers = () => get("top-sales");
+
+export const fetchNameCategories = () => get("categories");
+
+export const fetchItems = (categoryId) => {
+  const fetchLink = categoryId
+    ? `items?categoryId=${categoryId}`
+    : "items";
+
+  return get(fetchLink);
 };
 
 export const fetchMoreItems = (offset, categoryId) => {
   const fetchLink = categoryId
-    ? `http://localhost:7070/api/items?categoryId=${categoryId}&offset=${offset}`
-    : `http://localhost:7070/api/items?offset=${offset}`;
+    ? `items?categoryId=${categoryId}&offset=${offset}`
+    : `items?offset=${offset}`;
 
-  return fetch(fetchLink, {
-    method: "GET",
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Data coud not be fetched!");
-    } else {
-      return response.json();
-    }
-  });
+  return get(fetchLink);
 };
 
-export const searchItems = (text) =>
-  fetch(`http://localhost:7070/api/items?q=${text}`, { method: "GET" }).then(
-    (response) => {
-      if (!response.ok) {
-        throw new Error("Data coud not be fetched!");
-      } else {
-        return response.json();
-      }
-    }
-  );
+export const searchItems = (text) => get(`items?q=${text}`);
+
+export const getProduct = (productId) => get(`items/${productId}`);
+
+export const putOrder = (order) => post("order", order);

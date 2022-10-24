@@ -1,18 +1,16 @@
 import "../App.css";
 import Banner from "./Banner";
-import Bestsellers from "./catalog/Bestsellers";
-import Catalog from "./catalog/Catalog";
 import Footer from "./Footer";
+import Product from "./Product";
 
-function HomePage() {
+function ProductPage() {
   return (
     <>
       <main className="container">
         <div className="row">
           <div className="col">
             <Banner />
-            <Bestsellers />
-            <Catalog />
+            <Product />
           </div>
         </div>
       </main>
@@ -21,4 +19,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default ProductPage;

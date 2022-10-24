@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../App.css";
 
 function Card({ item }) {
+  const navigate = useNavigate();
   return (
     <div className="col-4">
             <div className="card catalog-item-card">
@@ -14,9 +15,9 @@ function Card({ item }) {
               <div className="card-body">
                 <p className="card-text">{item.title}</p>
                 <p className="card-text">{item.price}</p>
-                <Link to="/products/1.html" className="btn btn-outline-primary">
+                <button onClick={() => navigate(`/catalog/${item.id}`)} className="btn btn-outline-primary">
                   Заказать
-                </Link>
+                </button>
               </div>
             </div>
           </div>

@@ -1,18 +1,18 @@
 import "../App.css";
 import Banner from "./Banner";
-import Bestsellers from "./catalog/Bestsellers";
-import Catalog from "./catalog/Catalog";
+import Cart from "./catalog/Cart";
+import OrderForm from "./catalog/OrderForm";
 import Footer from "./Footer";
 
-function HomePage() {
+function CartPage() {
   return (
     <>
       <main className="container">
         <div className="row">
           <div className="col">
             <Banner />
-            <Bestsellers />
-            <Catalog />
+            <Cart />
+            <OrderForm />
           </div>
         </div>
       </main>
@@ -21,4 +21,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default CartPage;

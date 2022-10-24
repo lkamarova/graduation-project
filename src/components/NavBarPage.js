@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "../App.css";
 import headerLogo from "../img/header-logo.png";
 import SearchNavBar from "./catalog/SearchNavBar";
 
 function NavBar() {
   const [isSearch, setIsSearch] = useState(false);
+  let navigate = useNavigate();
+  const countProductsCart = useSelector((state) => state.shop.cart?.length);
 
   return (
     <div className="container">
@@ -61,8 +64,8 @@ function NavBar() {
                       onClick={() => setIsSearch(true)}
                     ></div>
                   )}
-                  <div className="header-controls-pic header-controls-cart">
-                    <div className="header-controls-cart-full">1</div>
+                  <div className="header-controls-pic header-controls-cart" onClick={() => navigate("/cart")}>
+                    {!!countProductsCart && <div className="header-controls-cart-full">{countProductsCart}</div>}
                     <div className="header-controls-cart-menu"></div>
                   </div>
                 </div>
