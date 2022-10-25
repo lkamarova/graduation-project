@@ -2,7 +2,7 @@ import "../App.css";
 import Banner from "./Banner";
 import Footer from "./Footer";
 
-function Contacts() {
+function ContactsPage() {
   return (
     <>
       <main className="container">
@@ -33,4 +33,4 @@ function Contacts() {
   );
 }
 
-export default Contacts;
+export default ContactsPage;

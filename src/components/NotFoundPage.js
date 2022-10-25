@@ -2,7 +2,7 @@ import "../App.css";
 import banner from "../img/banner.jpeg";
 import Footer from "./Footer";
 
-function NotFound() {
+function NotFoundPage() {
   return (
     <>
       <main className="container">
@@ -24,4 +24,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default NotFoundPage;

@@ -1,16 +1,16 @@
-import "../../App.css";
-import Banner from "../Banner";
-import Footer from "../Footer";
-import Catalog from "./Catalog";
+import "../App.css";
+import Banner from "./Banner";
+import Footer from "./Footer";
+import Product from "./Product";
 
-function CatalogPage() {
+function ProductPage() {
   return (
     <>
       <main className="container">
         <div className="row">
           <div className="col">
             <Banner />
-            <Catalog isSearch/>
+            <Product />
           </div>
         </div>
       </main>
@@ -19,4 +19,4 @@ function CatalogPage() {
   );
 }
 
-export default CatalogPage;
+export default ProductPage;

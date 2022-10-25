@@ -1,11 +1,16 @@
+import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import './App.css';
-import NavBar from './components/NavBar';
+import NavBarPage from './components/NavBarPage';
+import PreloaderAllPage from './components/PreloaderAllPage';
 
 function App() {
+  useSelector((state) => state.shop.cart);
+  const loading = useSelector(state => state.shop.loading)
   return (
     <div>
-      <NavBar />
+      {loading && <PreloaderAllPage />}
+      <NavBarPage />
       <Outlet />
     </div>
   );

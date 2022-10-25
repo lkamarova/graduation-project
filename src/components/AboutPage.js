@@ -2,7 +2,7 @@ import "../App.css";
 import Banner from "./Banner";
 import Footer from "./Footer";
 
-function AboutStore() {
+function AboutPage() {
   return (
     <>
       <main className="container">
@@ -62,4 +62,4 @@ function AboutStore() {
   );
 }
 
-export default AboutStore;
+export default AboutPage;
