@@ -32,9 +32,7 @@ export const shopSlice = createSlice({
       state.cart = [];
     },
     getTotalCost: (state, { payload }) => {
-      let result = 0;
-      state.cart?.forEach(el => result = result + (Number(el.price) * Number(el.amount)));
-      state.totalCost = result;
+      state.totalCost = state.cart.reduce((res, el) => res + Number(el.price) * Number(el.amount), 0);
     }
   },
 });

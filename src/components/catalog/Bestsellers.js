@@ -42,7 +42,7 @@ function Bestsellers() {
       <h2 className="text-center">Хиты продаж</h2>
       {!isLoaded && <Preloader />}
       {isLoaded && <div className="row">
-        {bestsellers?.map((el) => (
+        {bestsellers.map((el) => (
           <Card key={v4()} item={el} />
         ))}
       </div>}

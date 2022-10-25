@@ -4,16 +4,25 @@ import { putOrder } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, setLoading } from "../shopSlice";
 import PreloaderAllPage from "../PreloaderAllPage";
+import { DEFAULT_FORM_VALUE } from "./constants";
 
 function OrderForm({ item }) {
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [isAgree, setIsAgree] = useState(false);
+  const [formValue, setFormValue] = useState(DEFAULT_FORM_VALUE);
   const [isSubmit, setIsSubmit] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const disabledSubmit =
+    !formValue.checkbox || !formValue.phone || !formValue.address;
+
   const items = useSelector((state) => state.shop.cart);
   const dispatch = useDispatch();
+
+  const handleChange = (target) => {
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    setFormValue((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -23,8 +32,8 @@ function OrderForm({ item }) {
 
     const order = {
       owner: {
-        phone,
-        address,
+        phone: formValue.phone,
+        address: formValue.address,
       },
       items: preparedArr,
     };
@@ -33,20 +42,16 @@ function OrderForm({ item }) {
 
     return putOrder(order)
       .then((res) => {
-        setPhone("");
-        setAddress("");
+        setFormValue(DEFAULT_FORM_VALUE);
         setIsSubmit(true);
-        setIsAgree(false);
         dispatch(clearCart());
         dispatch(setLoading(false));
       })
       .catch((e) => {
         console.error(e.message);
       })
-      .finally(()=>setIsSubmitting(false));
+      .finally(() => setIsSubmitting(false));
   };
-
-  
 
   return (
     <>
@@ -59,29 +64,33 @@ function OrderForm({ item }) {
               <div className="form-group">
                 <label htmlFor="phone">Телефон</label>
                 <input
-                  onChange={(ev) => setPhone(ev.target.value)}
-                  value={phone}
+                  onChange={(ev) => handleChange(ev.target)}
+                  value={formValue.phone}
                   className="form-control"
                   id="phone"
+                  name="phone"
                   placeholder="Ваш телефон"
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="address">Адрес доставки</label>
                 <input
-                  onChange={(ev) => setAddress(ev.target.value)}
-                  value={address}
+                  onChange={(ev) => handleChange(ev.target)}
+                  value={formValue.address}
                   className="form-control"
+                  name="address"
                   id="address"
                   placeholder="Адрес доставки"
                 />
               </div>
               <div className="form-group form-check">
                 <input
-                  onChange={() => setIsAgree((prev) => !prev)}
+                  value={formValue.checkbox}
+                  onChange={(ev) => handleChange(ev.target)}
                   type="checkbox"
                   className="form-check-input"
-                  id="agreement"
+                  id="checkbox"
+                  name="checkbox"
                 />
                 <label className="form-check-label" htmlFor="agreement">
                   Согласен с правилами доставки
@@ -99,7 +108,7 @@ function OrderForm({ item }) {
               </div>
 
               <button
-                disabled={!isAgree || !phone || !address}
+                disabled={disabledSubmit}
                 type="submit"
                 className="btn btn-outline-secondary"
                 onClick={handleSubmit}
